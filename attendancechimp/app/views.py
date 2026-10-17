@@ -39,7 +39,7 @@ def time_view(request):
     if request.method == 'GET':
         curr_time = datetime.now(
             zoneinfo.ZoneInfo("America/Chicago")
-        ).strftime("%H:%M:%S")
+        ).strftime("%H:%M")
         return HttpResponse(curr_time)
     return HttpResponseBadRequest("Invalid request method. Use GET to get current CDT.")
 
