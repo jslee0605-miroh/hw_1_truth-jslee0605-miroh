@@ -45,12 +45,12 @@ def time_view(request):
 
 def sum_view(request):
     """Returns the sum of the two numbers passed as query parameters and returns it as a JSON response."""
-    
+
     if request.method == 'GET':
         num1 = request.GET.get('n1')
         num2 = request.GET.get('n2')
 
-        return JsonResponse({'sum': int(num1) + int(num2)})
+        return JsonResponse({'sum': float(num1) + float(num2)})
 
     return HttpResponseBadRequest("Invalid request method. Use GET to get the sum of 2 numbers.")
 
