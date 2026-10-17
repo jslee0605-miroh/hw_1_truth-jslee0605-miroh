@@ -33,7 +33,26 @@ def index(request):
     context = {}
     return render(request, 'app/index.html', context)
 
+def time_view(request):
+    """Return the current time in CDT in the form HH:MM and return it as a HTTPResponse object."""
 
+    if request.method == 'GET':
+        curr_time = datetime.now(
+            zoneinfo.ZoneInfo("America/Chicago")
+        ).strftime("%H:%M:%S")
+        return HttpResponse(curr_time)
+    return HttpResponseBadRequest("Invalid request method. Use GET to get current CDT.")
+
+def sum_view(request):
+    """Returns the sum of the two numbers passed as query parameters and returns it as a JSON response."""
+    
+    if request.method == 'GET':
+        num1 = request.GET.get('n1')
+        num2 = request.GET.get('n2')
+
+        return JsonResponse({'sum': int(num1) + int(num2)})
+
+    return HttpResponseBadRequest("Invalid request method. Use GET to get the sum of 2 numbers.")
 
 # ---------------------------------------------------------------------------
 # HW4  — user creation
