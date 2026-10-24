@@ -34,13 +34,18 @@ logger = logging.getLogger(__name__) # set up tracking, auditing, and debugging
 # User profiles
 # ---------------------------------------------------------------------------
 class InstructorProfile(User):
-    """InstructorProfile extends the Django User model to include instrutor-specific data."""
+    """InstructorProfile extends the Django User model to include instrutor-specific data.
+    
+    InstructorProfile-specific Attributes:
+    - department: the academic department the instructor belongs to. 
+    """
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, related_name='instructor_profile')
+    department = models.CharField(max_length=100, null=True, blank=True)
 
 class StudentProfile(User):
     """StudentProfile extends the Django User model to include student-specific data. 
     
-    Attributes:
+    StudentProfile-specific Attributes:
     - graduation_year: the year the student is expected to graduate. This is optional, and is a field specific to StudentProfile.
     """
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, related_name='student_profile')
@@ -112,11 +117,13 @@ class QRCodeUpload(models.Model):
     - student: foreign key to the StudentProfile instance that uploaded the QR code image
     - lecture: foreign key to the Lecture instance that the QR code image is supposed to correspond to. This is optional.
     - qr_image: the image of the QR code that is being uploaded.
+    - datetime_uploaded: the date and time that the QR code image was submitted. This ensures that the student uploaded the photo during lecture.
     """
 
     student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE)
     lecture = models.ForeignKey(Lecture, on_delete=models.CASCADE, null=True, blank=True)
     qr_image = models.FileField(upload_to='qr_uploads/') #note: I used FileField here instead of ImageField because the latter requires Pillow. Was not sure this was installed by default
+    datetime_uploaded = models.DateTimeField(auto_now_add=True)
 
 
 # ---------------------------------------------------------------------------
