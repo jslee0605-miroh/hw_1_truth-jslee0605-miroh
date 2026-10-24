@@ -33,7 +33,7 @@ logger = logging.getLogger(__name__) # set up tracking, auditing, and debugging
 # ---------------------------------------------------------------------------
 # User profiles
 # ---------------------------------------------------------------------------
-class InstructorProfile(User):
+class InstructorProfile(models.Model):
     """InstructorProfile extends the Django User model to include instrutor-specific data.
     
     InstructorProfile-specific Attributes:
@@ -42,7 +42,7 @@ class InstructorProfile(User):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, related_name='instructor_profile')
     department = models.CharField(max_length=100, null=True, blank=True)
 
-class StudentProfile(User):
+class StudentProfile(models.Model):
     """StudentProfile extends the Django User model to include student-specific data. 
     
     StudentProfile-specific Attributes:
