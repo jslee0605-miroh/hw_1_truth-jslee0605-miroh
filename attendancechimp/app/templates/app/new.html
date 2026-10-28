@@ -1,0 +1,9 @@
+<form method="post" action="/app/createUser">
+    {% csrf_token %}
+    <input type="text" name="user_name" placeholder="Enter username">
+    <input type="email" name="email" placeholder="Enter email">
+    <input type="password" name="password" placeholder="Enter password">
+    <input type="radio" name="is_student" value="yes" checked>Student
+    <input type="radio" name="is_student" value="no">Instructor
+    <button type="submit">Sign Up</button>
+</form>

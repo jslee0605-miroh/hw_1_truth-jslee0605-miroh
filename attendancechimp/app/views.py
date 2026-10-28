@@ -9,12 +9,13 @@ from django.shortcuts import render, redirect
 from django.http import (HttpResponse, HttpResponseForbidden,
                          HttpResponseBadRequest, JsonResponse)
 from django.views.decorators.csrf import csrf_exempt
-from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from datetime import datetime
+from django.contrib.auth.models import User
 import zoneinfo
 import json
 import io
+from .models import StudentProfile, InstructorProfile, Course, Enrollment, Lecture, QRCodeUpload
 
 # from .models import (InstructorProfile, StudentProfile, Course, Enrollment,
 #                      Lecture, QRCodeUpload, is_instructor, is_student,
@@ -62,7 +63,33 @@ def sum_view(request):
 # HW4  — user creation
 # ---------------------------------------------------------------------------
 
+def new_user(request):
+    if request.method == 'GET':
+        return render(request, 'app/new.html')
+    return HttpResponseBadRequest("Invalid request method. Use GET to access the new user form.")
 
+def createUser(request):
+    if request.method == 'POST':
+        new_username = request.POST.get('user_name')
+        new_email = request.POST.get('email')
+        new_password = request.POST.get('password')
+        new_is_student = request.POST.get('is_student')
+        if User.objects.filter(email = new_email).exists():
+            return HttpResponseBadRequest("A user with this email already exists.")
+        new_user = User.objects.create_user(
+            username=new_username,
+            email=new_email,
+            password=new_password,
+            is_staff=False,
+            is_superuser=False
+        )
+        if new_is_student == 'yes':
+            StudentProfile.objects.create(user=new_user)
+        else:
+            InstructorProfile.objects.create(user=new_user)
+        return HttpResponse(f"User {new_user.username} created successfully.")
+    elif request.method == 'GET':
+        return HttpResponseBadRequest("Invalid request method. Use POST to create user.")
 
 # ---------------------------------------------------------------------------
 # HW5  — courses, lectures, QR uploads, dump
