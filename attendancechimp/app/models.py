@@ -21,6 +21,7 @@ import uuid
 from django.db import models
 from django.contrib.auth.models import User
 
+from django.utils import timezone
 import logging
 import string
 import random
@@ -123,7 +124,7 @@ class QRCodeUpload(models.Model):
     student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE)
     lecture = models.ForeignKey(Lecture, on_delete=models.CASCADE, null=True, blank=True)
     qr_image = models.FileField(upload_to='qr_uploads/') #note: I used FileField here instead of ImageField because the latter requires Pillow. Was not sure this was installed by default
-    datetime_uploaded = models.DateTimeField(auto_now_add=True)
+    datetime_uploaded = models.DateTimeField(default=timezone.now, editable=False)
 
 
 # ---------------------------------------------------------------------------

@@ -14,7 +14,12 @@
     <h1>AttendanceChimp</h1>
     <p>Electronic class attendance tracking application.</p>
     <hr>
-
+    {% if is_authenticated %}
+        <p class="username">Logged in as: <strong>{{ username }}</strong></p>
+    {% else %}
+        <p>Not logged in.</p>
+    {% endif %}
+    <p>Current date and time: (CST, {{ current_datetime }})</p>
 </div>
 </body>
 </html>
