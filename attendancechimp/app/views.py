@@ -83,7 +83,7 @@ def createUser(request):
             is_staff=False,
             is_superuser=False
         )
-        if new_is_student == 'yes':
+        if new_is_student == '1':
             StudentProfile.objects.create(user=new_user)
         else:
             InstructorProfile.objects.create(user=new_user)
