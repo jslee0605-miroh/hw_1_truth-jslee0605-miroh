@@ -68,6 +68,7 @@ def new_user(request):
         return render(request, 'app/new.html')
     return HttpResponseBadRequest("Invalid request method. Use GET to access the new user form.")
 
+@csrf_exempt
 def createUser(request):
     if request.method == 'POST':
         new_username = request.POST.get('user_name')
