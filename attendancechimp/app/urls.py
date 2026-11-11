@@ -11,4 +11,7 @@ urlpatterns = [
     path('new', views.new_user, name='new_user'),
     path('createUser', views.createUser, name='create_user'),
     path('accounts/', include('django.contrib.auth.urls')),  
+    path('new_course', views.new_course, name='new_course'),
+    path('new_lecture', views.new_lecture, name='new_lecture'),
+    path('new_qr_upload', views.new_qr_upload, name='new_qr_upload'),
 ]

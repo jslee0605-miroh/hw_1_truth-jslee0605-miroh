@@ -96,7 +96,20 @@ def createUser(request):
 # HW5  — courses, lectures, QR uploads, dump
 # ---------------------------------------------------------------------------
 
+def new_course(request):
+    if request.method == 'GET':
+        return render(request, 'app/new_course.html')
+    return HttpResponseBadRequest("Invalid request method. Use GET to access the new course form.")
 
+def new_lecture(request):
+    if request.method == 'GET':
+        return render(request, 'app/new_lecture.html')
+    return HttpResponseBadRequest("Invalid request method. Use GET to access the new lecture form.")
+
+def new_qr_upload(request):
+    if request.method == 'GET':
+        return render(request, 'app/new_qr_upload.html')
+    return HttpResponseBadRequest("Invalid request method. Use GET to access the new QR upload form.")
 
 # ---------------------------------------------------------------------------
 # HW6  — getUploads
